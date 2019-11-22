@@ -15,6 +15,7 @@
   #include "Arduino.h"
 #else
   #include "WProgram.h"
+#endif
 #include <SoftwareSerial.h>
 
 #define SUCCESS 1
