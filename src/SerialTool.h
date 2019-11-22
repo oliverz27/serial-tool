@@ -11,7 +11,10 @@
  
 #ifndef SerialTool_h
 #define SerialTool_h
-#include "Arduino.h"
+#if ARDUINO >= 100
+  #include "Arduino.h"
+#else
+  #include "WProgram.h"
 #include <SoftwareSerial.h>
 
 #define SUCCESS 1
