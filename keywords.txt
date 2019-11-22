@@ -1,0 +1,15 @@
+SerialTool	KEYWORD1
+begin	KEYWORD2
+receiveData	KEYWORD2
+isNewData	KEYWORD2
+contains 	KEYWORD2
+sendCommand	KEYWORD2
+listen	KEYWORD2
+isDataReceived	KEYWORD2
+parseData	KEYWORD2
+sendOnceAndWaitForData	KEYWORD2
+sendRetryAndWaitForData	KEYWORD2
+setDebugMode	KEYWORD2
+clearBuffer	KEYWORD2
+SUCCESS	LITERAL1
+FAILED	LITERAL1
