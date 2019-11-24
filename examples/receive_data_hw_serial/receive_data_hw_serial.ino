@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------------
 
  * Receive Data - Hardware Serial - Example
- * Created by: Oliver G. Padolina @ VeriLo 11/22/2019
+ * Created by: Oliver G. Padolina @ VeriLo 11/24/2019
 
   -------------------------------------------------------------------*/
 
@@ -32,7 +32,7 @@ void setup() {
   gsm.begin(9600, GSM_MAX_NUM, gsmData, GSM_TIME_OUT);
   gsm.setDebugMode(&Serial, "GSM:");
   bt.begin(9600, BT_MAX_NUM, btData, BT_TIME_OUT);
-  gsm.setDebugMode(&Serial, "BT:");
+  bt.setDebugMode(&Serial, "BT:");
   Serial.println("START");
 }
 
