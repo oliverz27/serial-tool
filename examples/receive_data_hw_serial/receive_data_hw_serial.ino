@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------------
 
  * Receive Data - Hardware Serial - Example
- * Created by: Oliver G. Padolina @ VeriLo 11/24/2019
+ * Created by: Oliver G. Padolina @ VeriLo 03/11/2020
 
   -------------------------------------------------------------------*/
 
