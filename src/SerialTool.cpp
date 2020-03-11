@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------------
 
   SerialTool.cpp - Serial Tool Library
-  Created by: Oliver Padolina @ VeriLo on 11/22/2019
+  Created by: Oliver Padolina @ VeriLo on 03/11/2020
   
   A library for arduino that makes coding serial communication easy to
   integrate on any devices. Supports any serial devices, Like SIM800L
