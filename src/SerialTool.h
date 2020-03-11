@@ -45,7 +45,7 @@ class SerialTool
     void clearBuffer();
     void clearBuffer();
     void write(char *data);
-    void waitForData(char *data, uint32_t timeout);
+    bool waitForData(char *data, uint32_t timeout);
     
   private:
     Stream *_port;
