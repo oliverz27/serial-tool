@@ -11,5 +11,7 @@ sendOnceAndWaitForData	KEYWORD2
 sendRetryAndWaitForData	KEYWORD2
 setDebugMode	KEYWORD2
 clearBuffer	KEYWORD2
+write	KEYWORD2
+waitForData	KEYWORD2
 SUCCESS	LITERAL1
 FAILED	LITERAL1
