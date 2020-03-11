@@ -60,8 +60,7 @@ void loop() {
 
 void sendBTEvery2Seconds() {
   // Repeat every 2 seconds
-  unsigned long currentTime = millis();
-  if (currentTime - previousTime >= 2) {
+  if (millis() - previousTime >= 2000) {
     previousTime = currentTime;
     
     char message[20];
