@@ -1,7 +1,7 @@
 /*--------------------------------------------------------------------
 
   SerialTool.h - Serial Tool Library
-  Created by: Oliver Padolina @ VeriLo on 11/22/2019
+  Created by: Oliver Padolina @ VeriLo on 03/11/2020
   
   A library for arduino that makes coding serial communication easy to
   integrate on any devices. Supports any serial devices, Like SIM800L
@@ -24,25 +24,28 @@
 class SerialTool
 {
   public:
-    SerialTool(SoftwareSerial *ss, const char startMarker,
-      const char endMarker);
-    SerialTool(HardwareSerial *hs, const char startMarker,
-      const char endMarker);
+    SerialTool(SoftwareSerial *ss, char startMarker,
+      char endMarker);
+    SerialTool(HardwareSerial *hs, char startMarker,
+      char endMarker);
     void begin(const uint32_t baud, const uint16_t numberOfChars,
-      const char *receivedChars, const uint16_t timeout);
+      char *receivedChars, const uint16_t timeout);
     void receiveData();
     bool isNewData();
-    bool contains(const char *data);
-    void sendCommand(const char *command);
+    bool contains(char *data);
+    void sendCommand(char *command);
     void listen();
-    bool isDataReceived(const char *data);
-    void parseData(const char *splitter, char **parsedChars);
-    bool sendOnceAndWaitForData(const char *command, const char *data);
-    bool sendRetryAndWaitForData(const char *command, const char *data,
+    bool isDataReceived(char *data);
+    void parseData(char *splitter, char **parsedChars);
+    bool sendOnceAndWaitForData(char *command, char *data);
+    bool sendRetryAndWaitForData(char *command, char *data,
       uint8_t retries);
-    void setDebugMode(HardwareSerial *hs, const char *debugName);
-    void setDebugMode(SoftwareSerial *ss, const char *debugName);
+    void setDebugMode(HardwareSerial *hs, char *debugName);
+    void setDebugMode(SoftwareSerial *ss, char *debugName);
     void clearBuffer();
+    void clearBuffer();
+    void write(char *data);
+    void waitForData(char *data, uint32_t timeout);
     
   private:
     Stream *_port;
