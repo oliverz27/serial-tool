@@ -22,8 +22,8 @@
     @param startMarker - Start marker for incoming character
     @param endMarker - End marker for incoming character
   -------------------------------------------------------------------*/
-SerialTool::SerialTool(SoftwareSerial *ss, const char startMarker,
-  const char endMarker)
+SerialTool::SerialTool(SoftwareSerial *ss, char startMarker,
+  char endMarker)
 {
   _hwSerial = false;
   _port = ss;
@@ -38,8 +38,8 @@ SerialTool::SerialTool(SoftwareSerial *ss, const char startMarker,
     @param startMarker - Start marker for incoming character
     @param endMarker - End marker for incoming character
   -------------------------------------------------------------------*/
-SerialTool::SerialTool(HardwareSerial *hs, const char startMarker,
-  const char endMarker)
+SerialTool::SerialTool(HardwareSerial *hs, char startMarker,
+  char endMarker)
 {
   _hwSerial = true;
   _port = hs;
@@ -57,12 +57,12 @@ SerialTool::SerialTool(HardwareSerial *hs, const char startMarker,
     @brief Initializes serial interface and baud rate
     @param baudrate - Sensor's UART baud rate (9600, 57600, 115200)
     @param numberOfChars - Maximum number of character received
-      (Max Num is 256)
+      (Max Num is 65536)
     @param receivedChars - Received characters
     @param timeout - Timeout for waiting incoming character
       (Max Num is 65536)
   -------------------------------------------------------------------*/
-void SerialTool::begin(const uint32_t baudrate, const uint16_t numberOfChars, const char *receivedChars, const uint16_t timeout)
+void SerialTool::begin(const uint32_t baudrate, const uint16_t numberOfChars, char *receivedChars, const uint16_t timeout)
 {
   if (_hwSerial) {
     static_cast<HardwareSerial*>(_port)->begin(baudrate);  
@@ -134,7 +134,7 @@ bool SerialTool::isNewData()
     @brief Check if data contains specific word/character
     @param data - Word/Character to be find on data
   -------------------------------------------------------------------*/
-bool SerialTool::contains(const char *data)
+bool SerialTool::contains(char *data)
 {
   return strstr(_receivedChars, data);
 }
@@ -144,7 +144,7 @@ bool SerialTool::contains(const char *data)
     @brief Send command to serial
     @param command - Word/Character to be send on serial
   -------------------------------------------------------------------*/
-void SerialTool::sendCommand(const char *command)
+void SerialTool::sendCommand(char *command)
 {
   _port->write(command);
   if (_debug) {
@@ -171,18 +171,16 @@ void SerialTool::listen() {
     @brief Check if specific data received from serial
     @param data - Word/Character to be find on data
   -------------------------------------------------------------------*/
-bool SerialTool::isDataReceived(const char *data) {
+bool SerialTool::isDataReceived(char *data) {
   unsigned long previousTime = millis();
   
   while (true) {
     unsigned long currentTime = millis();
     if (currentTime - previousTime >= _timeout) {
-      previousTime = currentTime;
       return false;
     }
     receiveData();
     if (isNewData() && contains(data)) {
-      previousTime = currentTime;
       return true;
     }
   }
@@ -195,7 +193,7 @@ bool SerialTool::isDataReceived(const char *data) {
     @param parsedChars - array of char pointer used to store the
       splitted data
   -------------------------------------------------------------------*/
-void SerialTool::parseData(const char *splitter, char **parsedChars)
+void SerialTool::parseData(char *splitter, char **parsedChars)
 {
   char *parsedData;
   
@@ -216,7 +214,7 @@ void SerialTool::parseData(const char *splitter, char **parsedChars)
     @param command - Word/Character to be send on serial
     @param data - Word/Character to be find on data
   -------------------------------------------------------------------*/
-bool SerialTool::sendOnceAndWaitForData(const char *command, const char *data) {
+bool SerialTool::sendOnceAndWaitForData(char *command, char *data) {
   sendCommand(command);
   return isDataReceived(data);
 }
@@ -229,7 +227,7 @@ bool SerialTool::sendOnceAndWaitForData(const char *command, const char *data) {
     @param data - Word/Character to be find on data
     @param retries - Number of retries times timeout (Max is 255)
   -------------------------------------------------------------------*/
-bool SerialTool::sendRetryAndWaitForData(const char *command, const char *data, uint8_t retries) {
+bool SerialTool::sendRetryAndWaitForData(char *command, char *data, uint8_t retries) {
   uint8_t counter = 0;
   while (counter <= retries) {
     sendCommand(command);
@@ -248,7 +246,7 @@ bool SerialTool::sendRetryAndWaitForData(const char *command, const char *data, 
     @param hs - Pointer of Hardware Serial
     @param debug name - Name of serial device e.g. GSM, GPS, etc.
   -------------------------------------------------------------------*/
-void SerialTool::setDebugMode(HardwareSerial *hs, const char *debugName) {
+void SerialTool::setDebugMode(HardwareSerial *hs, char *debugName) {
   _debugger = hs;
   _debugName = debugName;
   _debug = true;
@@ -260,7 +258,7 @@ void SerialTool::setDebugMode(HardwareSerial *hs, const char *debugName) {
     @param ss - Pointer of Software Serial
     @param debug name - Name of serial device e.g. GSM, GPS, etc.
   -------------------------------------------------------------------*/
-void SerialTool::setDebugMode(SoftwareSerial *ss, const char *debugName) {
+void SerialTool::setDebugMode(SoftwareSerial *ss, char *debugName) {
   _debug = false;
 }
 
@@ -271,5 +269,34 @@ void SerialTool::setDebugMode(SoftwareSerial *ss, const char *debugName) {
 void SerialTool::clearBuffer() {
   while(_port->available() > 0) {
     _port->read();
+  }
+}
+
+/*-------------------------------------------------------------------
+  WRITE
+    @brief Write data to Serial
+  -------------------------------------------------------------------*/
+void SerialTool::write(char *data) {
+  _port->write(data);
+}
+
+/*-------------------------------------------------------------------
+  WAIT FOR DATA
+    @brief Wait for data at specified timeout
+    @param data - Word/Character to be find on data
+    @param timeout - time for timeout (Max is 65536)
+  -------------------------------------------------------------------*/
+bool SerialTool::waitForData(char *data, uint16_t timeout) {
+  uint32_t timer = millis();
+  while(true) {
+    if (millis() - timer >= timeout) {
+      return false;
+    }
+    receiveData();
+    if (isNewData()) {
+      if (contains(data)) {
+        return true;
+      }
+    }
   }
 }
