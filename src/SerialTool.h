@@ -44,7 +44,7 @@ class SerialTool
     void setDebugMode(SoftwareSerial *ss, char *debugName);
     void clearBuffer();
     void write(char *data);
-    bool waitForData(char *data, uint32_t timeout);
+    bool waitForData(char *data, uint16_t timeout);
     
   private:
     Stream *_port;
