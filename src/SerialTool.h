@@ -43,7 +43,6 @@ class SerialTool
     void setDebugMode(HardwareSerial *hs, char *debugName);
     void setDebugMode(SoftwareSerial *ss, char *debugName);
     void clearBuffer();
-    void clearBuffer();
     void write(char *data);
     bool waitForData(char *data, uint32_t timeout);
     
