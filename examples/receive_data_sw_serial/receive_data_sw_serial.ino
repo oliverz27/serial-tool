@@ -15,7 +15,7 @@ const char *GSM_START_MARKER  = '\n';
 const char *GSM_END_MARKER    = '\r';
 const uint8_t GSM_TX_PIN      = 8;
 const uint8_t GSM_RX_PIN      = 9;
-SoftwareSerial gsmSS(GSM_TX_PIN, GSM_RX_PIN);
+SoftwareSerial gsmSS(GSM_RX_PIN, GSM_TX_PIN);
 SerialTool gsm(&gsmSS, GSM_START_MARKER, GSM_END_MARKER);
 char gsmData[GSM_MAX_NUM];
 
@@ -26,7 +26,7 @@ const char *BT_START_MARKER = '<';
 const char *BT_END_MARKER   = '>';
 const uint8_t BT_TX_PIN     = 10;
 const uint8_t BT_RX_PIN     = 11;
-SoftwareSerial btSS(BT_TX_PIN, BT_RX_PIN);
+SoftwareSerial btSS(BT_RX_PIN, BT_TX_PIN);
 SerialTool bt(&btSS, BT_START_MARKER, BT_END_MARKER);
 char btData[BT_MAX_NUM];
 
